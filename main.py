@@ -9,8 +9,8 @@ def main():
 
   while True:
     # Send some text
-    lcd.lcd_string("Raspberry Pi         ",LCD_LINE_1)
-    lcd.lcd_string("I2C LCD              ",LCD_LINE_2)
+    lcd.lcd_string("Pi Home",LCD_LINE_1)
+    lcd.lcd_string("Awaiting Command",LCD_LINE_2)
     lcd.lcd_string("LAN: " + lcd.get_ip_address('eth0'),LCD_LINE_3)
     lcd.lcd_string("WLAN: " + lcd.get_ip_address('wlan0'),LCD_LINE_4)
 
