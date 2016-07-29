@@ -1,7 +1,7 @@
-import lcd
+from lcd import *
 import time
 
-LCD_CMD = 0
+#LCD_CMD = 0
 
 def main():
   # Main program block
