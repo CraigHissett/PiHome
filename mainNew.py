@@ -1,0 +1,100 @@
+import os.path
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+import json
+import time
+import os, sys
+from lcd import *
+
+from tornado.options import define, options
+define("port", default=8000, help="run on the given port", type=int)
+
+
+class IndexHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('index.html')
+    
+    def post (self):
+        WebCommand = self.get_argument ('command', '')
+        WebValue = self.get_argument ('value', '')
+        
+        if WebCommand == 'Pi':
+            if WebValue == 'Shutdown':
+                if sys.platform == 'win32':
+                    os.system('shutdown /s')
+                else:
+                    lcd_string("Shutting down...",LCD_LINE_2)
+                    os.system('shutdown -h now')
+            elif WebValue == 'Reboot':
+                if sys.platform == 'win32':
+                    os.system('shutdown /r')
+                else:
+                    os.system('shutdown -r now')
+            else:
+                print('No matching Pi Command')
+                return
+        elif WebCommand == 'Arduino':
+            if WebValue == 'Reset':
+                print('No matching Pi Command')
+                return                
+            else:
+                print('No matching Arduino Command')
+                return
+        else:
+            print('Command not recognised')
+
+
+class TestHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('index.html')
+
+    def post (self):
+        WebCommand = self.get_argument ('command', '')
+        WebValue = self.get_argument ('value', '')
+        
+        if WebCommand == 'Pi':
+            if WebValue == 'Shutdown':
+                if sys.platform == 'win32':
+                    os.system('shutdown /s')
+                else:
+                    os.system('shutdown -h now')
+            elif WebValue == 'Reboot':
+                if sys.platform == 'win32':
+                    os.system('shutdown /r')
+                else:
+                    os.system('shutdown -r now')
+            else:
+                print('No matching Pi Command')
+                return
+        elif WebCommand == 'Arduino':
+            if WebValue == 'Reset':
+                print('No matching Pi Command')
+                return                
+            else:
+                print('No matching Arduino Command')
+                return
+        else:
+            print('Command not recognised')
+
+
+if __name__ == "__main__":
+    lcd_init()
+    lcd_string("Server Running...",LCD_LINE_1)
+    lcd_string("LAN: " + get_ip_address('eth0'),LCD_LINE_3)
+    lcd_string("WLAN: " + get_ip_address('wlan0'),LCD_LINE_4)
+    tornado.options.parse_command_line()
+    app = tornado.web.Application(
+        handlers=[
+            (r"/", IndexHandler),
+            (r"/isaac", IsaacHandler),
+            (r"/test", TestHandler)],
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+            template_path=os.path.join(os.path.dirname(__file__), "templates"))
+
+    
+    httpServer = tornado.httpserver.HTTPServer(app)
+    httpServer.listen(options.port)
+    print ("Listening on port:", options.port)
+    tornado.ioloop.IOLoop.instance().start()
