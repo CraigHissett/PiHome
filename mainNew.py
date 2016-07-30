@@ -5,6 +5,7 @@ import tornado.options
 import tornado.web
 import json
 import time
+import datetime
 import os, sys
 from lcd import *
 
@@ -15,6 +16,7 @@ define("port", default=8000, help="run on the given port", type=int)
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
         self.render('index.html')
+        lcd_string("Index Requested",LCD_LINE_1)
     
     def post (self):
         WebCommand = self.get_argument ('command', '')
@@ -31,6 +33,7 @@ class IndexHandler(tornado.web.RequestHandler):
                 if sys.platform == 'win32':
                     os.system('shutdown /r')
                 else:
+                    lcd_string("Rebooting...",LCD_LINE_2)
                     os.system('shutdown -r now')
             else:
                 print('No matching Pi Command')
@@ -111,9 +114,15 @@ class IsaacHandler(tornado.web.RequestHandler):
         else:
             print('Command not recognised')
 
+def UpdateIPs():
+    lcd_string("LAN: " + get_ip_address('eth0'),LCD_LINE_3)
+    lcd_string("WLAN: " + get_ip_address('wlan0'),LCD_LINE_4)    
+
+
 if __name__ == "__main__":
     lcd_init()
     lcd_string("Server Running...",LCD_LINE_1)
+    lcd_string("                    ",LCD_LINE_")
     lcd_string("LAN: " + get_ip_address('eth0'),LCD_LINE_3)
     lcd_string("WLAN: " + get_ip_address('wlan0'),LCD_LINE_4)
     tornado.options.parse_command_line()
@@ -129,4 +138,8 @@ if __name__ == "__main__":
     httpServer = tornado.httpserver.HTTPServer(app)
     httpServer.listen(options.port)
     print ("Listening on port:", options.port)
-    tornado.ioloop.IOLoop.instance().start()
+    main_loop = tornado.ioloop.IOLoop.instance()
+    # Schedule event (5 seconds from now)
+    main_loop.add_timeout(datetime.timedelta(seconds=5), UpdateIPs)
+    # Start main loop
+    main_loop.start()
