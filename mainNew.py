@@ -79,6 +79,38 @@ class TestHandler(tornado.web.RequestHandler):
             print('Command not recognised')
 
 
+class IsaacHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('index.html')
+
+    def post (self):
+        WebCommand = self.get_argument ('command', '')
+        WebValue = self.get_argument ('value', '')
+        
+        if WebCommand == 'Pi':
+            if WebValue == 'Shutdown':
+                if sys.platform == 'win32':
+                    os.system('shutdown /s')
+                else:
+                    os.system('shutdown -h now')
+            elif WebValue == 'Reboot':
+                if sys.platform == 'win32':
+                    os.system('shutdown /r')
+                else:
+                    os.system('shutdown -r now')
+            else:
+                print('No matching Pi Command')
+                return
+        elif WebCommand == 'Arduino':
+            if WebValue == 'Reset':
+                print('No matching Pi Command')
+                return                
+            else:
+                print('No matching Arduino Command')
+                return
+        else:
+            print('Command not recognised')
+
 if __name__ == "__main__":
     lcd_init()
     lcd_string("Server Running...",LCD_LINE_1)
