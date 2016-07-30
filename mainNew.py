@@ -122,7 +122,7 @@ def UpdateIPs():
 if __name__ == "__main__":
     lcd_init()
     lcd_string("Server Running...",LCD_LINE_1)
-    lcd_string("                    ",LCD_LINE_2")
+    lcd_string(" ",LCD_LINE_2")
     lcd_string("LAN: " + get_ip_address('eth0'),LCD_LINE_3)
     lcd_string("WLAN: " + get_ip_address('wlan0'),LCD_LINE_4)
     tornado.options.parse_command_line()
