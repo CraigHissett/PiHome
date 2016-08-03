@@ -140,6 +140,6 @@ if __name__ == "__main__":
     print ("Listening on port:", options.port)
     main_loop = tornado.ioloop.IOLoop.instance()
     # Schedule event (5 seconds from now)
-    main_loop.add_timeout(datetime.timedelta(seconds=5), UpdateIPs())
+    main_loop.call_later(5, UpdateIPs)
     # Start main loop
     main_loop.start()
