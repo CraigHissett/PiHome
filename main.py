@@ -12,6 +12,8 @@ from lcd import *
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
 
+Socket1 0
+Socket2 1
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
@@ -118,8 +120,11 @@ class SocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print("WebSocket opened")
 
-    def on_message(self, message):
-        self.write_message(u"You said: " + message)
+    def on_message(self, requested):
+        response = "Socket" + requested
+        #self.write_message(u"You said: " + )
+        print(response)
+        self.write_message(response)
 
     def on_close(self):
         print("WebSocket closed")
