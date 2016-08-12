@@ -113,6 +113,17 @@ class IsaacHandler(tornado.web.RequestHandler):
                 return
         else:
             print('Command not recognised')
+            
+class SocketHandler(tornado.websocket.WebSocketHandler):
+    def open(self):
+        print("WebSocket opened")
+
+    def on_message(self, message):
+        self.write_message(u"You said: " + message)
+
+    def on_close(self):
+        print("WebSocket closed")
+
 
 def UpdateIPs():
     lcd_string("LAN: " + get_ip_address('eth0'),LCD_LINE_3)
@@ -130,6 +141,7 @@ if __name__ == "__main__":
         handlers=[
             (r"/", IndexHandler),
             (r"/isaac", IsaacHandler),
+            (r"/socket", SocketHandler),
             (r"/test", TestHandler)],
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             template_path=os.path.join(os.path.dirname(__file__), "templates"))
