@@ -50,6 +50,40 @@ class IndexHandler(tornado.web.RequestHandler):
         else:
             print('Command not recognised')
 
+            
+class GlenHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('Glenmorangie.html')
+        lcd_string("Drinks Dispenser",LCD_LINE_1)
+    def post (self):
+        WebCommand = self.get_argument ('command', '')
+        WebValue = self.get_argument ('value', '')
+        
+        if WebCommand == 'Pi':
+            if WebValue == 'Shutdown':
+                if sys.platform == 'win32':
+                    os.system('shutdown /s')
+                else:
+                    os.system('shutdown -h now')
+            elif WebValue == 'Reboot':
+                if sys.platform == 'win32':
+                    os.system('shutdown /r')
+                else:
+                    os.system('shutdown -r now')
+            else:
+                print('No matching Pi Command')
+                return
+        elif WebCommand == 'Arduino':
+            if WebValue == 'Reset':
+                print('No matching Pi Command')
+                return                
+            else:
+                print('No matching Arduino Command')
+                return
+        elif WebCommand == 'Drink':
+            #Create function to communicate with the Nano in the Drinks Dispenser
+        else:
+            print('Command not recognised')
 
 class TestHandler(tornado.web.RequestHandler):
     def get(self):
@@ -147,6 +181,7 @@ if __name__ == "__main__":
             (r"/", IndexHandler),
             (r"/isaac", IsaacHandler),
             (r"/socket", SocketHandler),
+            ("r/glenmorangie", GlenHandler),
             (r"/test", TestHandler)],
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             template_path=os.path.join(os.path.dirname(__file__), "templates"))
