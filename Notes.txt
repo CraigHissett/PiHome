@@ -2,7 +2,7 @@
 Added a Websocket Handler to /socket
 Create a client script on an ESP8266 and try and get control over the ESP8266 via web interface....
 http://thethingsystem.com/dev/Clients.html
-
+http://www.codestance.com/tutorials-archive/python-tornado-web-server-with-websockets-part-i-441
 
 
 Idea
