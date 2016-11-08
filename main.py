@@ -3,6 +3,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import tornado.websocket
 import json
 import time
 import datetime
@@ -90,10 +91,10 @@ class GlenHandler(tornado.web.RequestHandler):
             elif WebValue == '3':
                 print('Drink 3 requested')
                 return
-            elif WebValue == '3':
+            elif WebValue == '4':
                 print('Drink 4 requested')
                 return
-            elif WebValue == '3':
+            elif WebValue == '5':
                 print('Drink 5 requested')
                 return
             else:
