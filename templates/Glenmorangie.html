@@ -1,7 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Glenmorangie Dispenser</title>
+<script src="static/js/jquery-2.2.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $("#DrinkDiv, #DrinkDiv1").click(function(e) {
+        e.preventDefault();
+        var Bottle_Value = 1;
+        $.post("", {"command":"Pour", "value":Bottle_Value}, function(data) {
+            alert("Drink 1 Requested");
+        });
+      });
+      $("#DrinkDiv2").click(function(e) {
+        e.preventDefault();
+        var Bottle_Value = 2;
+        $.post("", {"command":"Pour", "value":Bottle_Value}, function(data) {
+            //alert("after heating post");
+        });
+      });
+      $("#DrinkDiv3").click(function(e) {
+        e.preventDefault();
+        var Bottle_Value = 3;
+        $.post("", {"command":"Pour", "value":Bottle_Value}, function(data) {
+            //alert("after heating post");
+        });
+      });
+      $("#DrinkDiv4").click(function(e) {
+        e.preventDefault();
+        var Bottle_Value = 4;
+        $.post("", {"command":"Pour", "value":Bottle_Value}, function(data) {
+            //alert("after heating post");
+        });
+      });
+      $("#DrinkDiv5").click(function(e) {
+        e.preventDefault();
+        var Bottle_Value = 5;
+        $.post("", {"command":"Pour", "value":Bottle_Value}, function(data) {
+            //alert("after heating post");
+        });
+      });
+    });
+</script>
 <style>
+    
 @import url(http://fonts.googleapis.com/css?family=Lato:400,900);  /* <-- Just for the demo, Yes I like pretty fonts... */
 
 .square {
@@ -102,7 +144,7 @@ p{
 </style>
 </head>
 <body>
-<div class="square bg img1">
+<div id="DrinkDiv1" class="square bg img1">
     <div class="content">
         <div class="table">
             <div class="table-cell">
@@ -120,7 +162,7 @@ p{
         </div>
     </div>
 </div>
-<div class="square bg img3">
+<div id="DrinkDiv2" class="square bg img3">
     <div class="content">
         <div class="table">
             <div class="table-cell">
@@ -131,16 +173,16 @@ p{
         </div>
     </div>
 </div>
-<div class="square bg img4">
+<div id="DrinkDiv3" class="square bg img4">
     <div class="content">
         <div class="table">
             <div class="table-cell">
-                And again
+                Text Here
             </div>
         </div>
     </div>
 </div>
-<div class="square bg img5">
+<div id="DrinkDiv4" class="square bg img5">
    <div class="content">
         <div class="table">
             <div class="table-cell">
@@ -149,7 +191,7 @@ p{
         </div>
     </div>
 </div>
-<div class="square bg img6">
+<div id="DrinkDiv5" class="square bg img6">
    <div class="content">
         <div class="table">
             <div class="table-cell">
