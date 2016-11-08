@@ -80,9 +80,24 @@ class GlenHandler(tornado.web.RequestHandler):
             else:
                 print('No matching Arduino Command')
                 return
-        elif WebCommand == 'Drink':
-            print('function to communicate with the Nano in the Drinks Dispenser')
-            return
+        elif WebCommand == 'Pour':
+            if WebValue == '1':
+                print('Drink 1 requested')
+                return
+            elif WebValue == '2':
+                print('Drink 2 requested')
+                return
+            elif WebValue == '3':
+                print('Drink 3 requested')
+                return
+            elif WebValue == '3':
+                print('Drink 4 requested')
+                return
+            elif WebValue == '3':
+                print('Drink 5 requested')
+                return
+            else:
+                print('Unknown drink selection')
         else:
             print('Command not recognised')
 
@@ -182,7 +197,7 @@ if __name__ == "__main__":
             (r"/", IndexHandler),
             (r"/isaac", IsaacHandler),
             (r"/socket", SocketHandler),
-            ("r/glenmorangie", GlenHandler),
+            (r"/glenmorangie", GlenHandler),
             (r"/test", TestHandler)],
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             template_path=os.path.join(os.path.dirname(__file__), "templates"))
