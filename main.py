@@ -12,8 +12,8 @@ from lcd import *
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
 
-Socket1 0
-Socket2 1
+Socket1=0
+Socket2=1
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
@@ -81,7 +81,8 @@ class GlenHandler(tornado.web.RequestHandler):
                 print('No matching Arduino Command')
                 return
         elif WebCommand == 'Drink':
-            #Create function to communicate with the Nano in the Drinks Dispenser
+            print('function to communicate with the Nano in the Drinks Dispenser')
+            return
         else:
             print('Command not recognised')
 
