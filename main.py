@@ -51,6 +51,10 @@ class IndexHandler(tornado.web.RequestHandler):
         else:
             print('Command not recognised')
 
+class CalHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('Calendar.html')
+        lcd_string("Calendar",LCD_LINE_1)
             
 class GlenHandler(tornado.web.RequestHandler):
     def get(self):
@@ -196,6 +200,7 @@ if __name__ == "__main__":
     app = tornado.web.Application(
         handlers=[
             (r"/", IndexHandler),
+            (r"/calendar", CalHandler),
             (r"/isaac", IsaacHandler),
             (r"/socket", SocketHandler),
             (r"/glenmorangie", GlenHandler),
